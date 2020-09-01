@@ -7,7 +7,19 @@ import {Col, Row, Container} from 'reactstrap';
 
 export default class App extends Component {
 
+    state = {
+        showRandomChar: true,
+    };
+
+    toggleRandomChar = () => {
+        this.setState((state) => state.showRandomChar = !state.showRandomChar);
+    };
+
     render() {
+        const {showRandomChar} = this.state;
+        const toggledChar = showRandomChar ? <RandomChar/> : null;
+        const btnText = showRandomChar ? 'Hide Character' : 'Show Character';
+
         return (
           <>
               <Container>
@@ -16,7 +28,10 @@ export default class App extends Component {
               <Container>
                   <Row>
                       <Col lg={{size: 5, offset: 0}}>
-                          <RandomChar/>
+                          {toggledChar}
+                      </Col>
+                      <Col>
+                          <button onClick={this.toggleRandomChar}>{btnText}</button>
                       </Col>
                   </Row>
                   <Row>
