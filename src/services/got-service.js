@@ -1,9 +1,5 @@
 export default class GotService {
-    /*constructor() {
-        this._apiBase = 'https://anapioficeandfire.com/api'
-    }*/
-
-    _apiBase = 'https://anapioficeandfire.com/api'; /* Тоже что и создание поля в конструкторе выше */
+    _apiBase = 'https://anapioficeandfire.com/api';
 
     async getResource(url) {
         const res = await fetch(`${this._apiBase}${url}`);
@@ -14,13 +10,15 @@ export default class GotService {
     };
 
     async getAllCharacters() {
-        const chars = await this.getResource(`/characters/?page=59`);
+        const chars = await this.getResource(`/characters/?page=70`); //214-last
+        // console.log(chars);
         /*Вернем массив объектов трансформированных по шаблону метода*/
         return chars.map(this._transformCharacter);
     };
 
     async getCharacter(id) {
         const char = await this.getResource(`/characters/${id}`);
+        // console.log(char);
         /* Передаем в метод объект полученный от сервера и трансформим его */
         return this._transformCharacter(char);
     };
@@ -45,7 +43,7 @@ export default class GotService {
         return this._transformBook(book);
     };
 
-    /*Функции трансформации данных от сервера:
+    /* Трансформация данных полученных с сервера:
     * - позволяет передавать в компонент только нужные данные а не весь ответ
     * - превращает ответ в удобный для js формат (camelCase)
     * - позволяет не копипастить */
@@ -56,6 +54,7 @@ export default class GotService {
             born: char.born,
             died: char.died,
             culture: char.culture,
+            id: char.url.match(RegExp('[0-9]{1,5}'))[0],
         };
     };
 

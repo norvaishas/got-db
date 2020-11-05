@@ -6,27 +6,32 @@ import ErrorMessage from '../error-message/error-message';
 
 export default class RandomChar extends Component {
 
-    constructor() {
-        super();
-        this.updateCharacter();
-    }
-
     state = {
         char: {},
         loading: true,
         error: false,
     };
 
-    got = new GotService();
+    gotService = new GotService();
+
+    componentDidMount() {
+        this.updateCharacter();
+        this.timerId = setInterval(this.updateCharacter, 2500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
+    }
 
     onCharacterLoaded = (char) => {
         this.setState({
             char,
-            loading: false
-        })
+            loading: false,
+            error: false
+        });
     };
 
-    onEroor = (err) => {
+    onError = (err) => {
         this.setState({
             loading: false,
             error: true
@@ -35,13 +40,12 @@ export default class RandomChar extends Component {
 
     updateCharacter = () => {
         const id = Math.floor(Math.random() * 2500 + 25);
-        this.got.getCharacter(id)
+        this.gotService.getCharacter(id)
           .then(this.onCharacterLoaded)
-          .catch(this.onEroor);
+          .catch(this.onError);
     };
 
     render() {
-
         const {char, loading, error} = this.state;
 
         /*Здесь создаются переменные которые будут переданы в JSX разметку.
@@ -63,10 +67,7 @@ export default class RandomChar extends Component {
 };
 
 const ViewChar = ({char}) => {
-
     const {name, gender, born, died, culture} = char;
-
-    console.log('ViewChar')
 
     return (
       <>

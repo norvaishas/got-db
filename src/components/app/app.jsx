@@ -9,10 +9,15 @@ export default class App extends Component {
 
     state = {
         showRandomChar: true,
+        selectedChar: null,
     };
 
     toggleRandomChar = () => {
         this.setState((state) => state.showRandomChar = !state.showRandomChar);
+    };
+
+    onCharacterSelected = (charId) => {
+        this.setState({selectedChar: charId});
     };
 
     render() {
@@ -36,10 +41,12 @@ export default class App extends Component {
                   </Row>
                   <Row>
                       <Col md='5'>
-                          <ItemList />
+                          <ItemList
+                            onCharacterSelected={this.onCharacterSelected}
+                          />
                       </Col>
                       <Col lg={{size: 4, offset: 3}}>
-                          <CharDetails />
+                          <CharDetails charId={this.state.selectedChar} />
                       </Col>
                   </Row>
               </Container>
