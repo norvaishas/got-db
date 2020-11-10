@@ -1,29 +1,35 @@
 import React, {Component} from 'react';
 import Header from '../header/header';
 import RandomChar from '../random-char/random-char';
-import ItemList from '../item-list/item-list';
-import CharDetails from '../char-details/char-details';
 import {Col, Row, Container} from 'reactstrap';
+import ErrorBtn from '../error-btn/error-btn';
+import ErrorMessage from '../error-message/error-message';
+import CharPage from '../char-page/char-page';
 
 export default class App extends Component {
 
     state = {
         showRandomChar: true,
-        selectedChar: null,
+        hasError: false
     };
 
     toggleRandomChar = () => {
         this.setState((state) => state.showRandomChar = !state.showRandomChar);
     };
 
-    onCharacterSelected = (charId) => {
-        this.setState({selectedChar: charId});
-    };
+    componentDidCatch(error, errorInfo) {
+        console.log('Catch');
+        this.setState({hasError: true});
+    }
 
     render() {
-        const {showRandomChar} = this.state;
+        const {showRandomChar, hasError} = this.state;
         const toggledChar = showRandomChar ? <RandomChar/> : null;
         const btnText = showRandomChar ? 'Hide Character' : 'Show Character';
+
+        if (hasError) {
+            return <ErrorMessage/>
+        }
 
         return (
           <>
@@ -37,18 +43,12 @@ export default class App extends Component {
                       </Col>
                       <Col>
                           <button onClick={this.toggleRandomChar}>{btnText}</button>
+                          <ErrorBtn/>
                       </Col>
                   </Row>
-                  <Row>
-                      <Col md='5'>
-                          <ItemList
-                            onCharacterSelected={this.onCharacterSelected}
-                          />
-                      </Col>
-                      <Col lg={{size: 4, offset: 3}}>
-                          <CharDetails charId={this.state.selectedChar} />
-                      </Col>
-                  </Row>
+                  <CharPage/>
+                  <CharPage/>
+                  <CharPage/>
               </Container>
           </>
         )

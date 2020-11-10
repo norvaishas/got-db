@@ -3,6 +3,7 @@ import './char-details.css';
 import GotService from '../../services/got-service';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
+import ErrorBtn from '../error-btn/error-btn';
 
 export default class CharDetails extends Component {
 
@@ -18,7 +19,7 @@ export default class CharDetails extends Component {
         this.updateChar(this.props.charId);
     };
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    componentDidUpdate(prevProps) {
         //Если внутри этого метода изменять стей, то обязательно надо проверить что пропсы изменились
         if (prevProps.charId !== this.props.charId) {
             this.updateChar(this.props.charId);
@@ -87,6 +88,7 @@ const ViewChar = ({char}) => {
                   <span>{culture}</span>
               </li>
           </ul>
+          <ErrorBtn/>
       </>
     )
 }
