@@ -5,8 +5,13 @@ import {Col, Row, Container} from 'reactstrap';
 import ErrorBtn from '../error-btn/error-btn';
 import ErrorMessage from '../error-message/error-message';
 import CharPage from '../char-page/char-page';
+import ItemList from '../item-list/item-list';
+import CharDetails from '../char-details/char-details';
+import GotService from '../../services/got-service';
 
 export default class App extends Component {
+
+    gotService = new GotService();
 
     state = {
         showRandomChar: true,
@@ -46,9 +51,38 @@ export default class App extends Component {
                           <ErrorBtn/>
                       </Col>
                   </Row>
-                  <CharPage/>
-                  <CharPage/>
-                  <CharPage/>
+
+                  <CharPage getData={this.gotService.getAllCharacters} />
+
+                  <Row>123</Row>
+
+                 {/* <Row>
+                      <Col md='5'>
+                          <ItemList
+                            getData={this.gotService.getAllBooks}
+                            onCharacterSelected={this.onCharacterSelected}
+                            // Ренедер-функция (патерн)
+                            renderItem={(item) => (<span>item.name <button>Click Me</button></span>)}
+                          />
+                      </Col>
+                      <Col lg={{size: 4, offset: 3}}>
+                          <CharDetails charId={this.state.selectedChar}/>
+                      </Col>
+                  </Row>
+
+                  <Row>
+                      <Col md='5'>
+                          <ItemList
+                            getData={this.gotService.getAllHouses}
+                            onCharacterSelected={this.onCharacterSelected}
+                            renderItem={(item) => item.name}
+                          />
+                      </Col>
+                      <Col lg={{size: 4, offset: 3}}>
+                          <CharDetails charId={this.state.selectedChar}/>
+                      </Col>
+                  </Row>*/}
+
               </Container>
           </>
         )
