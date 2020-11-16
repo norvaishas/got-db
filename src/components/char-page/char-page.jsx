@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Col, Row} from 'reactstrap';
 import ItemList from '../item-list/item-list';
-import CharDetails from '../char-details/char-details';
+import ItemDetails, {Record} from '../item-details/item-details';
 import ErrorBoundry from '../error-boundry/error-boundry';
 
 // Элемент-контейнер (патерн)
@@ -24,34 +24,37 @@ export default class CharPage extends Component {
         selectedChar: null,
     };
 
-    onCharacterSelected = (charId) => {
+    onItemSelected = (charId) => {
         this.setState({selectedChar: charId});
     };
 
     render() {
-
         const itemList = (
           <ItemList
-            onCharacterSelected={this.onCharacterSelected}
-            getData={this.props.getData}>
-
+            onItemSelected={this.onItemSelected}
+            getData={this.props.getData.getAllCharacters}>
               {/*Рендер-функция переданная как children*/}
               {i => (
                 `${i.name} (${i.gender} ${i.culture})`
               )}
-
           </ItemList>
         );
 
         const charDetails = (
           <ErrorBoundry>
-              <CharDetails charId={this.state.selectedChar}/>
+              <ItemDetails
+                itemId={this.state.selectedChar}
+                getData={this.props.getData}>
+                  <Record field='gender' label='Gender'/>
+                  <Record field='born' label='Born'/>
+              </ItemDetails>
           </ErrorBoundry>
         )
 
         return (
           <ErrorBoundry>
-              {RowBlock(charDetails, itemList)}
+              {/*props.children*/}
+              {RowBlock(itemList, charDetails)}
               {/*//Либо так (при деструктуризации аргументов функции)
               <RowBlock left={itemList} right={charDetails} />*/}
           </ErrorBoundry>

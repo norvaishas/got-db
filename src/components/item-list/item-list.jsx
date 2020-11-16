@@ -31,13 +31,13 @@ export default class ItemList extends Component {
     renderItemList(arr) {
         return arr.map((item) => {
             const {id} = item;
-            //Use render-func & children-prop
+            //Use render-func in children-prop
             const renderLabel = this.props.children(item);
             return (
               <li
                 className="list-group-item"
                 key={id}
-                onClick={() => this.props.onCharacterSelected(id)}>
+                onClick={() => this.props.onItemSelected(id)}>
                   {renderLabel}
               </li>
             )

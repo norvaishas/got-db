@@ -1,42 +1,54 @@
 import React, {Component} from 'react';
-import './char-details.css';
-import GotService from '../../services/got-service';
+import './item-details.css';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
 import ErrorBtn from '../error-btn/error-btn';
 
-export default class CharDetails extends Component {
+
+const Record = ({itemDetails, field, label}) => {
+    return (
+      <li className="list-group-item d-flex justify-content-between">
+          <span className="term">{label}</span>
+          {/*itemDetails стал доступен благодаря тому что его добавили мспользуя React.CloneElem..*/}
+          <span>{itemDetails[field]}</span>
+      </li>
+    )
+};
+
+export {Record};
+
+export default class ItemDetails extends Component {
 
     state = {
-        charDetails: null,
+        itemDetails: null,
         error: false,
         loading: false,
     };
 
-    gotService = new GotService();
-
     componentDidMount() {
-        this.updateChar(this.props.charId);
+        this.updateItem(this.props.itemId);
     };
 
     componentDidUpdate(prevProps) {
         //Если внутри этого метода изменять стей, то обязательно надо проверить что пропсы изменились
-        if (prevProps.charId !== this.props.charId) {
-            this.updateChar(this.props.charId);
+        if (prevProps.itemId !== this.props.itemId) {
+            this.updateItem(this.props.itemId);
         }
     };
 
-    updateChar = (id) => {
+    updateItem = (id) => {
         this.setState({loading: true});
-        this.gotService.getCharacter(id)
-          .then(charDetails => {
+        this.props.getData.getCharacter(id)
+          .then(itemDetails => {
               this.setState({
-                  charDetails,
+                  itemDetails,
                   error: false,
                   loading: false,
               });
           })
+
           .catch(err => {
+              console.log(err)
               this.setState({
                   error: true,
                   loading: false,
@@ -45,18 +57,30 @@ export default class CharDetails extends Component {
     };
 
     render() {
-        const { charDetails, error, loading} = this.state;
+        console.log('Render ItemDetails')
+        const { itemDetails, error, loading} = this.state;
 
-        if (!charDetails) {
+        if (!itemDetails) {
             return <span>Выберите перснонажа</span>;
         }
 
-        const content = !loading && !error ? <ViewChar char={charDetails}/> : null;
-        const spinner = loading ?  <Spinner/> : null;
+        let content;
+        if (!loading && !error) {
+            const ch = this.props.children;
+            const records = React.Children.map(ch, (child) => {
+                //Добавление к клонируемым записям дополнительных свойств
+                return React.cloneElement(child, {itemDetails});
+            })
+            content = <ViewItem item={itemDetails} fields={records}/>
+        } else {
+            content = null;
+        }
+
+        const spinner = loading ? <Spinner/> : null;
         const errorMsg = !content && !loading ? <ErrorMessage/> : null;
 
         return (
-          <div className="char-details rounded">
+          <div className="item-details rounded">
               {spinner}
               {content}
               {errorMsg}
@@ -65,13 +89,13 @@ export default class CharDetails extends Component {
     };
 };
 
-const ViewChar = ({char}) => {
-    const {name, gender, born, died, culture} = char;
+const ViewItem = ({item, fields}) => {
+    const {name, gender, born, died, culture} = item;
     return (
       <>
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-              <li className="list-group-item d-flex justify-content-between">
+              {/*<li className="list-group-item d-flex justify-content-between">
                   <span className="term">Gender</span>
                   <span>{gender}</span>
               </li>
@@ -86,7 +110,8 @@ const ViewChar = ({char}) => {
               <li className="list-group-item d-flex justify-content-between">
                   <span className="term">Culture</span>
                   <span>{culture}</span>
-              </li>
+              </li>*/}
+              {fields}
           </ul>
           <ErrorBtn/>
       </>
