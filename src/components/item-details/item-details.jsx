@@ -36,9 +36,11 @@ export default class ItemDetails extends Component {
         }
     };
 
-    updateItem = (id) => {
+    updateItem = () => {
+        const {getData} = this.props;
         this.setState({loading: true});
-        this.props.getData.getCharacter(id)
+
+        getData()
           .then(itemDetails => {
               this.setState({
                   itemDetails,
@@ -46,7 +48,6 @@ export default class ItemDetails extends Component {
                   loading: false,
               });
           })
-
           .catch(err => {
               console.log(err)
               this.setState({
@@ -90,27 +91,11 @@ export default class ItemDetails extends Component {
 };
 
 const ViewItem = ({item, fields}) => {
-    const {name, gender, born, died, culture} = item;
+    const {name} = item;
     return (
       <>
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-              {/*<li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Gender</span>
-                  <span>{gender}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Born</span>
-                  <span>{born}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Died</span>
-                  <span>{died}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Culture</span>
-                  <span>{culture}</span>
-              </li>*/}
               {fields}
           </ul>
           <ErrorBtn/>

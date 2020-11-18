@@ -10,21 +10,19 @@ export default class GotService {
     };
 
     getAllCharacters = async () => {
-        const chars = await this.getResource(`/characters/?page=70`); //214-last
-        // console.log(chars);
+        const chars = await this.getResource(`/characters/?page=59`); //214-last
         /*Вернем массив объектов трансформированных по шаблону метода*/
         return chars.map(this._transformCharacter);
     };
 
     async getCharacter(id) {
         const char = await this.getResource(`/characters/${id}`);
-        // console.log(char);
         /* Передаем в метод объект полученный от сервера и трансформим его */
         return this._transformCharacter(char);
     };
 
     getAllHouses = async () => {
-        const houses = await this.getResource('/houses')
+        const houses = await this.getResource('/houses?page=37')
         return houses.map(this._transformHouse);
     };
 
