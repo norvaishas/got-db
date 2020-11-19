@@ -64,6 +64,7 @@ export default class GotService {
             region: house.region,
             coatOfArms: house.coatOfArms,
             words: house.words,
+            id: house.url.match(RegExp('[0-9]{1,5}'))[0],
         };
     };
 
@@ -72,7 +73,8 @@ export default class GotService {
             name: book.name,
             isbn: book.isbn,
             authors: book.authors,
-            numberOfPages: book.numberOfPages
+            numberOfPages: book.numberOfPages,
+            id: book.url.match(RegExp('[0-9]{1,5}'))[0],
         };
     };
 };

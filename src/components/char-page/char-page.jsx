@@ -35,6 +35,7 @@ export default class CharPage extends Component {
                   <ItemList
                     getData={this.gotService.getAllCharacters}
                     onCharacterSelected={this.onCharacterSelected}
+                    renderItem={(i) => `${i.name} (${i.gender} ${i.culture})`}
                   />
               </Col>
               <Col lg={{size: 4, offset: 3}}>
