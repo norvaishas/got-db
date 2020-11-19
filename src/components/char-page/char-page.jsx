@@ -3,8 +3,11 @@ import {Col, Row} from 'reactstrap';
 import ItemList from '../item-list/item-list';
 import CharDetails from '../char-details/char-details';
 import ErrorMessage from '../error-message/error-message';
+import GotService from '../../services/got-service';
 
 export default class CharPage extends Component {
+
+    gotService = new GotService();
 
     state = {
         selectedChar: null,
@@ -30,6 +33,7 @@ export default class CharPage extends Component {
           <Row>
               <Col md='5'>
                   <ItemList
+                    getData={this.gotService.getAllCharacters}
                     onCharacterSelected={this.onCharacterSelected}
                   />
               </Col>

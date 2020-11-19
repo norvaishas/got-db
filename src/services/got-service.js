@@ -9,7 +9,7 @@ export default class GotService {
         return await res.json();
     };
 
-    async getAllCharacters() {
+    getAllCharacters = async () => {
         const chars = await this.getResource(`/characters/?page=70`); //214-last
         // console.log(chars);
         /*Вернем массив объектов трансформированных по шаблону метода*/
@@ -23,7 +23,7 @@ export default class GotService {
         return this._transformCharacter(char);
     };
 
-    async getAllHouses() {
+    getAllHouses = async () => {
         const houses = await this.getResource('/houses')
         return houses.map(this._transformHouse);
     };
@@ -33,7 +33,7 @@ export default class GotService {
         return this._transformHouse(house);
     };
 
-    async getAllBooks() {
+    getAllBooks= async () => {
         const books = await this.getResource('/books')
         return books.map(this._transformBook);
     };

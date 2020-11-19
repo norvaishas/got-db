@@ -1,60 +1,58 @@
 import React, {Component} from 'react';
 import './item-list.css'
-import GotService from '../../services/got-service';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
 
-
 export default class ItemList extends Component {
-    gotService = new GotService();
 
     state = {
-        charList: null,
+        itemList: null,
         loading: true,
         error: false
     };
 
     componentDidMount() {
-        this.gotService.getAllCharacters()
-          .then(charList => this.setState({
-              charList,
+        const {getData} = this.props;
+        getData()
+          .then(itemList => this.setState({
+              itemList,
               loading: false,
               error: false
           }))
           .catch(err => this.setState({
-              charList: null,
+              itemList: null,
               loading: false,
               error: true
           }));
     };
 
-    createCharList(arr) {
+    renderItems(arr) {
         console.log(arr)
-        return arr.map((elem) => {
+        return arr.map(({id, name}) => {
             return (
               <li
-                key={elem.id}
+                key={id}
                 className="list-group-item"
-                onClick={() => this.props.onCharacterSelected(elem.id)}
+                onClick={() => this.props.onCharacterSelected(id)}
               >
-                  {elem.name}
+                  {name}
               </li>
             )
         })
     };
 
     render() {
-        const {charList, loading, error} = this.state;
+        const {itemList, loading, error} = this.state;
 
         if (error) {
             return <ErrorMessage/>
         }
 
-        if (!charList) {
+        if (!itemList) {
             return <Spinner/>
         }
 
-        const chars = this.createCharList(charList);
+        const chars = this.renderItems(itemList);
         const content = !loading && !error ? <List chars={chars}/> : null;
         // const spinner = loading ? <Spinner/> : null;
         // const errMsg = !content && !loading ? <ErrorMessage/> : null;
