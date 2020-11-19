@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import './char-details.css';
+import './item-details.css';
 import GotService from '../../services/got-service';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
 import ErrorBtn from '../error-btn/error-btn';
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     state = {
-        charDetails: null,
+        itemDetails: null,
         error: false,
         loading: false,
     };
@@ -29,9 +29,9 @@ export default class CharDetails extends Component {
     updateChar = (id) => {
         this.setState({loading: true});
         this.gotService.getCharacter(id)
-          .then(charDetails => {
+          .then(itemDetails => {
               this.setState({
-                  charDetails,
+                  itemDetails,
                   error: false,
                   loading: false,
               });
@@ -45,13 +45,13 @@ export default class CharDetails extends Component {
     };
 
     render() {
-        const { charDetails, error, loading} = this.state;
+        const { itemDetails, error, loading} = this.state;
 
-        if (!charDetails) {
+        if (!itemDetails) {
             return <span>Выберите перснонажа</span>;
         }
 
-        const content = !loading && !error ? <ViewChar char={charDetails}/> : null;
+        const content = !loading && !error ? <ViewChar char={itemDetails}/> : null;
         const spinner = loading ?  <Spinner/> : null;
         const errorMsg = !content && !loading ? <ErrorMessage/> : null;
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ItemList from '../item-list/item-list';
-import CharDetails from '../char-details/char-details';
+import ItemDetails from '../item-details/item-details';
 import ErrorMessage from '../error-message/error-message';
 import GotService from '../../services/got-service';
 import RowBlock from '../row-block/row-block';
@@ -34,7 +34,7 @@ export default class CharPage extends Component {
 
         const charDetails = (
           <ErrorBoundry>
-              <CharDetails charId={this.state.selectedChar}/>
+              <ItemDetails charId={this.state.selectedChar}/>
           </ErrorBoundry>
         );
 

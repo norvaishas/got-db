@@ -6,7 +6,7 @@ import ErrorBtn from '../error-btn/error-btn';
 import ErrorMessage from '../error-message/error-message';
 import CharPage from '../char-page/char-page';
 import ItemList from '../item-list/item-list';
-import CharDetails from '../char-details/char-details';
+import ItemDetails from '../item-details/item-details';
 import GotService from '../../services/got-service';
 
 export default class App extends Component {
@@ -63,7 +63,7 @@ export default class App extends Component {
                           </ItemList>
                       </Col>
                       <Col lg={{size: 4, offset: 3}}>
-                          <CharDetails charId={this.state.selectedChar}/>
+                          <ItemDetails charId={this.state.selectedChar}/>
                       </Col>
                   </Row>
 
@@ -76,7 +76,7 @@ export default class App extends Component {
                           </ItemList>
                       </Col>
                       <Col lg={{size: 4, offset: 3}}>
-                          <CharDetails charId={this.state.selectedChar}/>
+                          <ItemDetails charId={this.state.selectedChar}/>
                       </Col>
                   </Row>
 
