@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './item-details.css';
-import GotService from '../../services/got-service';
 import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
 import ErrorBtn from '../error-btn/error-btn';
@@ -13,23 +12,23 @@ export default class ItemDetails extends Component {
         loading: false,
     };
 
-    gotService = new GotService();
-
     componentDidMount() {
-        this.updateChar(this.props.charId);
+        this.updateItem();
     };
 
     componentDidUpdate(prevProps) {
         //Если внутри этого метода изменять стей, то обязательно надо проверить что пропсы изменились
-        if (prevProps.charId !== this.props.charId) {
-            this.updateChar(this.props.charId);
+        if (prevProps.itemId !== this.props.itemId) {
+            this.updateItem();
         }
     };
 
-    updateChar = (id) => {
+    updateItem = () => {
+        const {itemId, getData} = this.props;
         this.setState({loading: true});
-        this.gotService.getCharacter(id)
+        getData(itemId)
           .then(itemDetails => {
+              console.log(itemDetails)
               this.setState({
                   itemDetails,
                   error: false,
@@ -37,6 +36,7 @@ export default class ItemDetails extends Component {
               });
           })
           .catch(err => {
+              console.log(err)
               this.setState({
                   error: true,
                   loading: false,

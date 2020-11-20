@@ -16,7 +16,7 @@ export default class GotService {
         return chars.map(this._transformCharacter);
     };
 
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const char = await this.getResource(`/characters/${id}`);
         // console.log(char);
         /* Передаем в метод объект полученный от сервера и трансформим его */
@@ -28,7 +28,7 @@ export default class GotService {
         return houses.map(this._transformHouse);
     };
 
-    async getHouse(id) {
+    getHouse = async (id) => {
         const house = await this.getResource(`/houses/${id}`);
         return this._transformHouse(house);
     };
@@ -38,7 +38,7 @@ export default class GotService {
         return books.map(this._transformBook);
     };
 
-    async getBook(id) {
+    getBook = async (id) => {
         const book = await this.getResource(`/books/${id}`);
         return this._transformBook(book);
     };

@@ -8,6 +8,7 @@ import CharPage from '../char-page/char-page';
 import ItemList from '../item-list/item-list';
 import ItemDetails from '../item-details/item-details';
 import GotService from '../../services/got-service';
+import RowBlock from '../row-block/row-block';
 
 export default class App extends Component {
 
@@ -36,12 +37,31 @@ export default class App extends Component {
             return <ErrorMessage/>
         }
 
+        const {getCharacter, getBook} = this.gotService;
+
+        const charDetails = (
+          <ItemDetails
+            itemId={197}
+            getData={getCharacter}
+          />
+        );
+
+        const bookDetails = (
+          <ItemDetails
+            itemId={3}
+            getData={getBook}
+          />
+        );
+
         return (
           <>
               <Container>
                   <Header />
+                  <RowBlock
+                    left={charDetails}
+                    right={bookDetails}/>
               </Container>
-              <Container>
+              {/*<Container>
                   <Row>
                       <Col lg={{size: 5, offset: 0}}>
                           {toggledChar}
@@ -63,7 +83,7 @@ export default class App extends Component {
                           </ItemList>
                       </Col>
                       <Col lg={{size: 4, offset: 3}}>
-                          <ItemDetails charId={this.state.selectedChar}/>
+                          <ItemDetails itemId={this.state.selectedChar}/>
                       </Col>
                   </Row>
 
@@ -76,11 +96,11 @@ export default class App extends Component {
                           </ItemList>
                       </Col>
                       <Col lg={{size: 4, offset: 3}}>
-                          <ItemDetails charId={this.state.selectedChar}/>
+                          <ItemDetails itemId={this.state.selectedChar}/>
                       </Col>
                   </Row>
 
-              </Container>
+              </Container>*/}
           </>
         )
     }
