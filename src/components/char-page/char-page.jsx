@@ -25,7 +25,7 @@ export default class CharPage extends Component {
         const itemList = (
           <ErrorBoundry>
               <ItemList
-                getData={this.gotService.getAllCharacters}
+                // getData={this.gotService.getAllCharacters}
                 onCharacterSelected={this.onCharacterSelected}>
                   {(i) => `${i.name} (${i.gender} ${i.culture})`}
               </ItemList>

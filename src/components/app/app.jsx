@@ -65,8 +65,8 @@ export default class App extends Component {
                     left={charDetails}
                     right={bookDetails}/>
               </Container>
-              {/*<Container>
-                  <Row>
+              <Container>
+                  {/*<Row>
                       <Col lg={{size: 5, offset: 0}}>
                           {toggledChar}
                       </Col>
@@ -74,37 +74,37 @@ export default class App extends Component {
                           <button onClick={this.toggleRandomChar}>{btnText}</button>
                           <ErrorBtn/>
                       </Col>
-                  </Row>
+                  </Row>*/}
 
-                  <CharPage/>
-
-                  <Row>
-                      <Col md='5'>
-                          <ItemList
-                            getData={this.gotService.getAllBooks}
-                            onCharacterSelected={this.onCharacterSelected}>
-                              {(item) => item.name}
-                          </ItemList>
-                      </Col>
-                      <Col lg={{size: 4, offset: 3}}>
-                          <ItemDetails itemId={this.state.selectedChar}/>
-                      </Col>
-                  </Row>
+                  {/*<CharPage/>*/}
 
                   <Row>
                       <Col md='5'>
                           <ItemList
-                            getData={this.gotService.getAllHouses}
+                            // getData={this.gotService.getAllBooks}
                             onCharacterSelected={this.onCharacterSelected}>
                               {(item) => item.name}
                           </ItemList>
                       </Col>
-                      <Col lg={{size: 4, offset: 3}}>
+                      {/*<Col lg={{size: 4, offset: 3}}>
                           <ItemDetails itemId={this.state.selectedChar}/>
-                      </Col>
+                      </Col>*/}
                   </Row>
 
-              </Container>*/}
+                  <Row>
+                      <Col md='5'>
+                          <ItemList
+                            // getData={this.gotService.getAllHouses}
+                            onCharacterSelected={this.onCharacterSelected}>
+                              {(item) => item.name}
+                          </ItemList>
+                      </Col>
+                      {/*<Col lg={{size: 4, offset: 3}}>
+                          <ItemDetails itemId={this.state.selectedChar}/>
+                      </Col>*/}
+                  </Row>
+
+              </Container>
           </>
         )
     }

@@ -35,6 +35,7 @@ export default class ItemDetails extends Component {
     };
 
     updateItem = () => {
+        console.log(this.props)
         const {itemId, getData} = this.props;
         this.setState({loading: true});
         getData(itemId)
