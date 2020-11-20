@@ -4,6 +4,17 @@ import Spinner from '../spinner/spinner';
 import ErrorMessage from '../error-message/error-message';
 import ErrorBtn from '../error-btn/error-btn';
 
+const Record = ({item, feild, label}) => {
+    return (
+      <li className="list-group-item d-flex justify-content-between">
+          <span className="term">{label}</span>
+          <span>{item[feild]}</span>
+      </li>
+    );
+};
+
+export { Record };
+
 export default class ItemDetails extends Component {
 
     state = {
@@ -51,7 +62,8 @@ export default class ItemDetails extends Component {
             return <span>Выберите перснонажа</span>;
         }
 
-        const content = !loading && !error ? <ViewChar char={itemDetails}/> : null;
+        const content = !loading && !error ?
+          <ViewItem item={itemDetails} records={this.props.children}/> : null;
         const spinner = loading ?  <Spinner/> : null;
         const errorMsg = !content && !loading ? <ErrorMessage/> : null;
 
@@ -65,28 +77,16 @@ export default class ItemDetails extends Component {
     };
 };
 
-const ViewChar = ({char}) => {
-    const {name, gender, born, died, culture} = char;
+const ViewItem = ({item, records}) => {
     return (
       <>
-          <h4>{name}</h4>
+          <h4>{item.name}</h4>
           <ul className="list-group list-group-flush">
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Gender</span>
-                  <span>{gender}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Born</span>
-                  <span>{born}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Died</span>
-                  <span>{died}</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                  <span className="term">Culture</span>
-                  <span>{culture}</span>
-              </li>
+              {
+                  React.Children.map(records, (child) => {
+                      return React.cloneElement(child, {item: item})
+                  })
+              }
           </ul>
           <ErrorBtn/>
       </>

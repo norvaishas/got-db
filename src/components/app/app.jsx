@@ -6,7 +6,7 @@ import ErrorBtn from '../error-btn/error-btn';
 import ErrorMessage from '../error-message/error-message';
 import CharPage from '../char-page/char-page';
 import ItemList from '../item-list/item-list';
-import ItemDetails from '../item-details/item-details';
+import ItemDetails, {Record} from '../item-details/item-details';
 import GotService from '../../services/got-service';
 import RowBlock from '../row-block/row-block';
 
@@ -41,16 +41,20 @@ export default class App extends Component {
 
         const charDetails = (
           <ItemDetails
-            itemId={197}
-            getData={getCharacter}
-          />
+            itemId={777}
+            getData={getCharacter}>
+              <Record feild='gender' label='Gender'/>
+              <Record feild='culture' label='Culture'/>
+          </ItemDetails>
         );
 
         const bookDetails = (
           <ItemDetails
             itemId={3}
-            getData={getBook}
-          />
+            getData={getBook}>
+              <Record feild='isbn' label='Isbn'/>
+              <Record feild='numberOfPages' label='Pages'/>
+          </ItemDetails>
         );
 
         return (
